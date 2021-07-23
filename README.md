@@ -126,3 +126,15 @@ python3 app.py
 6. **Verify on the Browser**<br>
 Navigate to project homepage [http://127.0.0.1:5000/](http://127.0.0.1:5000/) or [http://localhost:5000](http://localhost:5000) 
 
+## Additional Learning references
+
+1. **convert time**
+```
+https://stackoverflow.com/questions/10624937/convert-datetime-object-to-a-string-of-date-only-in-python
+```
+
+2. **overall implementation of flask**
+```
+https://www.youtube.com/watch?v=gDSLrpxR3G4&list=PLei96ZX_m9sWQco3fwtSMqyGL-JDQo28l&index=1
+```
+
