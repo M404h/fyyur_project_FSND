@@ -123,6 +123,7 @@ python3 app.py
 6. **Verify on the Browser**<br>
 Navigate to project homepage [http://127.0.0.1:5000/](http://127.0.0.1:5000/) or [http://localhost:5000](http://localhost:5000) 
 
+
 ## Additional Learning references
 
 1. **convert time**
@@ -135,3 +136,12 @@ https://stackoverflow.com/questions/10624937/convert-datetime-object-to-a-string
 https://www.youtube.com/watch?v=gDSLrpxR3G4&list=PLei96ZX_m9sWQco3fwtSMqyGL-JDQo28l&index=1
 ```
 
+3. **string from db to list **
+```
+https://appdividend.com/2019/11/12/how-to-convert-python-string-to-list-example/
+
+```
+4. **using get instead fo regular query to get data by id **
+```
+https://stackoverflow.com/questions/6750017/how-to-query-database-by-id-using-sqlalchemy
+```
