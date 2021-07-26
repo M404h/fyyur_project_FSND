@@ -5,6 +5,7 @@
 
 Fyyur is a musical venue and artist booking site that facilitates the discovery and bookings of shows between local performing artists and venues. This site lets you list new artists and venues, discover them, and list shows with artists as a venue owner.
 
+![Peek 2021-07-27 01-08](https://user-images.githubusercontent.com/67692329/127065620-6ec26115-ed28-4ee5-ac89-0c85cdee5d67.gif)
 
 ## Tech Stack (Dependencies)
 
@@ -149,7 +150,7 @@ https://stackoverflow.com/questions/6750017/how-to-query-database-by-id-using-sq
 
 5. **search **
 ```
-https://stackoverflow.com/questions/6750017/how-to-query-database-by-id-using-sqlalchemy
+https://stackoverflow.com/questions/42579400/search-function-query-in-flask-sqlalchemy
 
 used like and contains but none worked so used ilike and worked perfectly 
 explained : https://mode.com/sql-tutorial/sql-like/
