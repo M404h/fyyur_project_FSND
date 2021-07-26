@@ -15,7 +15,7 @@ from sqlalchemy.orm import backref
 from forms import *
 from flask_migrate import Migrate
 from sqlalchemy.orm import relationship, backref
-
+from models import * 
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -30,63 +30,9 @@ migrate = Migrate(app, db)
 
 #----------------------------------------------------------------------------#
 # Models.
+# in file (classes.py) 
 #----------------------------------------------------------------------------#
 
-class Venue(db.Model):
-    __tablename__ = "Venue"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    city = db.Column(db.String(120))
-    state = db.Column(db.String(120))
-    address = db.Column(db.String(120))
-    phone = db.Column(db.String(120))
-    image_link = db.Column(db.String(500))
-    facebook_link = db.Column(db.String(120))
-    genres=db.Column(db.String())
-    web_link = db.Column(db.String(120))
-    looking_for_talent=db.Column(db.Boolean(), default=False)
-    seeking_description=db.Column(db.String())
-
-    shows = db.relationship("Show", backref="Venue",lazy=True)
-
-    #implemented any missing fields, as a database migration using Flask-Migrate
-
-
-      
-class Artist(db.Model):
-    __tablename__ = "Artist"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    city = db.Column(db.String(120))
-    state = db.Column(db.String(120))
-    phone = db.Column(db.String(120))
-    genres = db.Column(db.String(120))
-    image_link = db.Column(db.String(500))
-    facebook_link = db.Column(db.String(120))
-    web_link = db.Column(db.String(120))
-    looking_for_venues=db.Column(db.Boolean(), default=False)
-    seeking_description=db.Column(db.String())
-    
-    shows = db.relationship("Show", backref="Artist",lazy=True)
-
-    #implement any missing fields, as a database migration using Flask-Migrate
-
-
-
-class Show(db.Model):
-  __tablename__ = "Show"
-
-  id = db.Column(db.Integer, primary_key=True)
-  artist_id=db.Column(db.Integer , db.ForeignKey("Artist.id"))
-  venue_id=db.Column(db.Integer, db.ForeignKey("Venue.id"))
-  start_time=db.Column(db.DateTime)
-
-#Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
-
-  artistFK = db.relationship("Artist", backref="Artist",lazy=True)
-  venueFK = db.relationship("Venue", backref="Venue",lazy=True)
 
 #----------------------------------------------------------------------------#
 # Filters.
@@ -128,8 +74,7 @@ def venues():
     venues_array=[]
 
     for v in venues:
-      new_shows_num=Show.query.filter(Show.venue_id==v.id).filter(Show.start_time >= datetime.now()).count()
-    
+      new_shows_num=db.session.query(Show).join(Venue).filter(Show.artist_id==artist_id).filter(Show. start_time>datetime.now()).all().count()
       venues_array.append({
       "id": v.id,
       "name": v.name,
@@ -156,7 +101,7 @@ def search_venues(): # not working
   venue_data = Venue.query.filter(Venue.name.ilike('%' + search_term+ '%')).all()
   venues_results_array=[]
   for v in venue_data:
-    show_num = Show.query.filter(Show.venue_id == v.id).filter(Show.start_time>=datetime.now()).count()
+    show_num = db.session.query(Show).join(Venue).filter(Show.artist_id==artist_id).filter(Show. start_time>datetime.now()).all().count()
     venues_results_array.append({
         "id": v.id,
         "name": v.name,
@@ -164,8 +109,8 @@ def search_venues(): # not working
       })
   
   #test upcoming shows query
-  #for ven in venues_results_array:
-  #  print(ven)    
+  for ven in venues_results_array:
+    print(ven)    
   
   response = {
     "count": len(venues_results_array),
@@ -182,29 +127,12 @@ def show_venue(venue_id):
 
   data =[]
 
-  show_query = Show.query.filter(Show.venue_id == venue_id).all()
   v = Venue.query.filter(Venue.id == venue_id).first()
-
-  upcoming_shows = []
-  past_shows = []
+  past_shows = db.session.query(Show).join(Venue).filter(Show.artist_id==artist_id).filter(Show.start_time<datetime.now()).all()
+  upcoming_shows = db.session.query(Show).join(Venue).filter(Show.artist_id==artist_id).filter(Show.start_time>=datetime.now()).all()
 
   genresList =v.genres.strip('}{').split(',');
   
-
-  for s in show_query:
-    
-    show_object={
-      "artist_id": s.Artist.id,
-      "artist_name":s.Artist.name,
-      "artist_image_link": s.Artist.image_link,
-      "start_time":s.start_time.ctime() 
-    }
-
-    if s.start_time >= datetime.now(): 
-      upcoming_shows.append(show_object)
-    else:
-      past_shows.append(show_object)
-
 
   data={
     "id": venue_id,
@@ -327,6 +255,7 @@ def search_artists():
   artist_results_array=[]
   for a in artist_data:
     show_num = Show.query.filter(Show.artist_id == a.id).filter(Show.start_time>=datetime.now()).count()
+
     artist_results_array.append({
         "id": a.id,
         "name": a.name,
@@ -349,25 +278,12 @@ def show_artist(artist_id):
     show_query = Show.query.filter(Show.artist_id == artist_id).all()
     a = Artist.query.filter(Artist.id == artist_id).first()
 
-    upcoming_shows = []
-    past_shows = []
+    past_shows = db.session.query(Show).join(Venue).filter(Show.artist_id==artist_id).filter(Show.start_time<datetime.now()).all()
+    upcoming_shows = db.session.query(Show).join(Venue).filter(Show.artist_id==artist_id).filter(Show.start_time>=datetime.now()).all()
+
 
     genresList =a.genres.strip('}{').split(',');
-    
-    for s in show_query:
-      
-      show_object={
-      "venue_id": s.Venue.id,
-      "venue_name": s.Venue.name,
-      "venue_image_link": s.Venue.image_link,
-      "start_time": s.start_time.ctime(),
-      }
 
-      if s.start_time >= datetime.now(): 
-        upcoming_shows.append(show_object)
-      else:
-        past_shows.append(show_object)
-    
     data={
     "id": artist_id,
     "name": a.name,

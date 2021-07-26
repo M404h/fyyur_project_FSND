@@ -8,6 +8,13 @@ DEBUG = True
 
 # Connect to the database
 
+DB_HOST = os.getenv('DB_HOST', 'localhost')
+DB_USER = os.getenv('DB_USER', 'postgres')
+DB_PASSWORD = os.getenv('DB_PASSWORD', '123123')
+DB_NAME = os.getenv('DB_NAME', 'fyyur')
+
+DB_PATH = 'postgresql://{}:{}@{}/{}'.format(DB_USER, DB_PASSWORD, DB_HOST, DB_NAME)
+
 
 # IMPLEMENT DATABASE URL
-SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:123123@localhost/fyyur'
+SQLALCHEMY_DATABASE_URI = DB_PATH
