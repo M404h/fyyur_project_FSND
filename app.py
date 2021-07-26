@@ -128,10 +128,8 @@ def venues():
     venues_array=[]
 
     for v in venues:
-      new_shows_num=Show.query.filter(Venue.id==v.id).filter(Show.start_time >= datetime.now()).count()
-      if new_shows_num<0:
-        new_shows_num=0;
-
+      new_shows_num=Show.query.filter(Show.venue_id==v.id).filter(Show.start_time >= datetime.now()).count()
+    
       venues_array.append({
       "id": v.id,
       "name": v.name,
