@@ -124,7 +124,7 @@ python3 app.py
 Navigate to project homepage [http://127.0.0.1:5000/](http://127.0.0.1:5000/) or [http://localhost:5000](http://localhost:5000) 
 
 
-## Additional Learning references
+## Additional Learning resources
 
 1. **convert time**
 ```
@@ -141,7 +141,17 @@ https://www.youtube.com/watch?v=gDSLrpxR3G4&list=PLei96ZX_m9sWQco3fwtSMqyGL-JDQo
 https://appdividend.com/2019/11/12/how-to-convert-python-string-to-list-example/
 
 ```
-4. **using get instead fo regular query to get data by id **
+
+4. **using get instead of regular query to get data by id for edit **
 ```
 https://stackoverflow.com/questions/6750017/how-to-query-database-by-id-using-sqlalchemy
+```
+
+5. **search **
+```
+https://stackoverflow.com/questions/6750017/how-to-query-database-by-id-using-sqlalchemy
+
+used like and contains but none worked so used ilike and worked perfectly 
+explained : https://mode.com/sql-tutorial/sql-like/
+
 ```
