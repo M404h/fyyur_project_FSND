@@ -150,7 +150,7 @@ https://stackoverflow.com/questions/6750017/how-to-query-database-by-id-using-sq
 
 5. **search **
 ```
-https://stackoverflow.com/questions/6750017/how-to-query-database-by-id-using-sqlalchemy
+https://stackoverflow.com/questions/42579400/search-function-query-in-flask-sqlalchemy
 
 used like and contains but none worked so used ilike and worked perfectly 
 explained : https://mode.com/sql-tutorial/sql-like/
